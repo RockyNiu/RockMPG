@@ -16,6 +16,21 @@ import java.util.List;
  */
 public abstract class BaseDataSource<T extends BaseData> {
     // Database fields
+    public enum DeletedFlag {
+        All(-1),
+        UNDELETED(0),
+        DELETED(1);
+        private final int flag;
+
+        private DeletedFlag(int flag) {
+            this.flag = flag;
+        }
+
+        public int getFlag() {
+            return flag;
+        }
+    }
+
     protected SQLiteDatabase database;
     protected BaseSQLiteHelper dbHelper;
 
@@ -25,6 +40,7 @@ public abstract class BaseDataSource<T extends BaseData> {
 
     private String tableName;
     private String[] allColumns;
+
 
     protected BaseDataSource(Context context, String tableName, String[] allColumns) {
         dbHelper = new BaseSQLiteHelper(context);
@@ -128,10 +144,23 @@ public abstract class BaseDataSource<T extends BaseData> {
     }
 
     public List<T> getList() {
-        List<T> list = new ArrayList<T>();
+        return getList(DeletedFlag.UNDELETED);
+    }
 
-        openWritableDatabase();
-        Cursor cursor = database.query(true, tableName, allColumns, null, null, null, null, null, null);
+    public List<T> getList(DeletedFlag deleted) {
+        List<T> list = new ArrayList<T>();
+        String selection = null;
+        String[] selectionArgs = null;
+
+        // Deleted filter
+        if (deleted == DeletedFlag.UNDELETED || deleted == DeletedFlag.DELETED) {
+            selection = BaseSQLiteHelper.COLUMN_DELETED
+                    + " = ? ";
+            selectionArgs = new String[]{Integer.toString(deleted
+                    .getFlag())};
+        }
+        openReadableDatabase();
+        Cursor cursor = database.query(true, tableName, allColumns, selection, selectionArgs, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -159,5 +188,6 @@ public abstract class BaseDataSource<T extends BaseData> {
     abstract ContentValues toValuesWithoutId(T t);
 
     abstract T cursorToItem(Cursor cursor);
+
 
 }

@@ -8,14 +8,18 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rockyniu.calculatempg.R;
 import com.rockyniu.calculatempg.adapter.RecordListAdapter;
 import com.rockyniu.calculatempg.database.RecordDataSource;
 import com.rockyniu.calculatempg.listener.OnFragmentInteractionListener;
+import com.rockyniu.calculatempg.listener.SwipeDismissListViewTouchListener;
 import com.rockyniu.calculatempg.model.Record;
+import com.rockyniu.calculatempg.util.ToastHelper;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -52,7 +56,7 @@ public class RecordFragment extends BaseFragment implements AbsListView.OnItemCl
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private RecordListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static RecordFragment newInstance(String param1, String param2) {
@@ -99,6 +103,44 @@ public class RecordFragment extends BaseFragment implements AbsListView.OnItemCl
 
 //        // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
+
+        // swipe to delete tasks
+        SwipeDismissListViewTouchListener touchListener = new SwipeDismissListViewTouchListener(
+                (ListView) mListView,
+                new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                    @Override
+                    public boolean canDismiss(int position) {
+                        return true;
+                    }
+
+                    @Override
+                    public void onDismiss(ListView listView,
+                                          int[] reverseSortedPositions) {
+
+                        // Delete all dismissed tasks
+                        for (int position : reverseSortedPositions) {
+                            RecordListAdapter tasksAdapter = (RecordListAdapter) mListView
+                                    .getAdapter();
+                            Record currentItem = tasksAdapter
+                                    .getItem(position);
+                            // label delete
+                            currentItem.setModifiedTime(Calendar.getInstance()
+                                    .getTimeInMillis());
+                            recordDataSource
+                                    .labelItemDeletedWithModifiedTime(currentItem);
+                        }
+                        ToastHelper.showToastInternal(
+                                getActivity(),
+                                "Task deleted.");
+                        refreshView();
+                    }
+                });
+        mListView.setOnTouchListener(touchListener);
+        // Setting this scroll listener is required to ensure that during
+        // ListView scrolling,
+        // we don't look for swipes.
+        mListView.setOnScrollListener(touchListener.makeScrollListener());
+
         return rootView;
     }
 
@@ -141,5 +183,11 @@ public class RecordFragment extends BaseFragment implements AbsListView.OnItemCl
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
         }
+    }
+
+    private void refreshView() {
+        records = recordDataSource.getList();
+        mAdapter.updateList(records);
+        mAdapter.notifyDataSetChanged();
     }
 }
