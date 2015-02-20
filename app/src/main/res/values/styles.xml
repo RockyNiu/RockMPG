@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat"></style>
+
+    <style name="CalculatorInputItemTheme">
+        <item name="android:layout_marginTop">@dimen/calculator_inputItem_layout_topMargin</item>
+        <item name="android:textViewStyle">@style/CalculatorInputTextViewStyle</item>
+        <item name="android:editTextStyle">@style/CalculatorInputEditTextStyle</item>
+    </style>
+
+    <style name="CalculatorInputTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:textSize">@dimen/calculator_inputItem_textView_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CalculatorInputEditTextStyle" parent="android:Widget.EditText">
+        <item name="android:textSize">@dimen/calculator_inputItem_editText_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RecordTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:textSize">@dimen/record_textView_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">@dimen/record_listView_space_interval</item>
+    </style>
+</resources>

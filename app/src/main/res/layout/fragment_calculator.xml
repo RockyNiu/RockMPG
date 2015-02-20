@@ -1,0 +1,92 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.rockyniu.calculatempg.fragment.CalculatorFragment">
+
+
+    <LinearLayout
+        android:id="@+id/layout_main"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <!--<TextView-->
+        <!--android:id="@+id/textView_welcomeTitle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/welcome_title" />-->
+
+        <LinearLayout
+            android:id="@+id/layout_miles"
+            android:layout_width="@dimen/calculator_inputItem_layout_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:theme="@style/CalculatorInputItemTheme">
+
+            <TextView
+                android:id="@+id/textView_title_miles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/miles_title" />
+
+            <EditText
+                android:id="@+id/editText_miles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_gas"
+            android:layout_width="@dimen/calculator_inputItem_layout_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:theme="@style/CalculatorInputItemTheme">
+
+            <TextView
+                android:id="@+id/record_row_title_gas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gas_title" />
+
+            <EditText
+                android:id="@+id/editText_gas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_mpg"
+            android:layout_width="@dimen/calculator_inputItem_layout_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:theme="@style/CalculatorInputItemTheme">
+
+            <Button
+                android:id="@+id/btn_mpg"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mpg_title"
+                android:textSize="@dimen/calculator_inputItem_textView_size" />
+
+            <TextView
+                android:id="@+id/textView_mpg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/calculator_inputItem_textView_bigSize" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

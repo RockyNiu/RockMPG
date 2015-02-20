@@ -1,0 +1,19 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="calculator_inputItem_layout_topMargin">10dp</dimen>
+    <dimen name="calculator_inputItem_layout_width">300dp</dimen>
+    <dimen name="calculator_inputItem_textView_size">32sp</dimen>
+    <dimen name="calculator_inputItem_textView_bigSize">64sp</dimen>
+    <dimen name="calculator_inputItem_editText_size">32sp</dimen>
+
+    <dimen name="record_row_height">50dp</dimen>
+    <dimen name="record_row_width">300dp</dimen>
+    <dimen name="record_textView_size">20sp</dimen>
+    <dimen name="record_item_width">100dp</dimen>
+    <dimen name="record_listView_space_interval">5dp</dimen>
+    <dimen name="record_priority_bar_width">10dp</dimen>
+
+</resources>

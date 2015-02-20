@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MpgCalculator</string>
+    <string name="tab_calculator_title">Calculator</string>
+    <string name="tab_record_title">History</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="miles_title">Miles</string>
+    <string name="gas_title">Gas</string>
+    <string name="mpg_title">MPG</string>
+
+</resources>
