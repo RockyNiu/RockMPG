@@ -1,8 +1,10 @@
 package com.rockyniu.calculatempg.activity;
 
-import android.support.v7.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,6 +13,8 @@ import com.rockyniu.calculatempg.fragment.CalculatorFragment;
 import com.rockyniu.calculatempg.fragment.RecordFragment;
 import com.rockyniu.calculatempg.listener.MainTabListener;
 import com.rockyniu.calculatempg.listener.OnFragmentInteractionListener;
+
+import static com.rockyniu.calculatempg.util.DialogHelper.showNeedClickDialog;
 
 
 public class MainActivity extends BaseActivity implements OnFragmentInteractionListener {
@@ -88,6 +92,19 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
 
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Exit " + getResources().getString(R.string.app_name) + "?")
+                .setMessage(null)
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        MainActivity.super.onBackPressed();
+                    }
+                }).create().show();
+    }
 //    /**
 //     * A placeholder fragment containing a simple view.
 //     */

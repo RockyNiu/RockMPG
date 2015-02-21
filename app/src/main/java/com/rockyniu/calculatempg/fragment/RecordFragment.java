@@ -1,6 +1,8 @@
 package com.rockyniu.calculatempg.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.rockyniu.calculatempg.R;
+import com.rockyniu.calculatempg.activity.MainActivity;
 import com.rockyniu.calculatempg.adapter.RecordListAdapter;
 import com.rockyniu.calculatempg.database.RecordDataSource;
 import com.rockyniu.calculatempg.listener.OnFragmentInteractionListener;
@@ -121,18 +124,28 @@ public class RecordFragment extends BaseFragment implements AbsListView.OnItemCl
                         for (int position : reverseSortedPositions) {
                             RecordListAdapter tasksAdapter = (RecordListAdapter) mListView
                                     .getAdapter();
-                            Record currentItem = tasksAdapter
+                            final Record currentItem = tasksAdapter
                                     .getItem(position);
-                            // label delete
-                            currentItem.setModifiedTime(Calendar.getInstance()
-                                    .getTimeInMillis());
-                            recordDataSource
-                                    .labelItemDeletedWithModifiedTime(currentItem);
+
+                            new AlertDialog.Builder(getActivity())
+                                    .setTitle("Delete Record")
+                                    .setMessage("Are you sure you want to delete?")
+                                    .setNegativeButton(android.R.string.no, null)
+                                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                        public void onClick(DialogInterface arg0, int arg1) {
+                                            // label delete
+                                            currentItem.setModifiedTime(Calendar.getInstance()
+                                                    .getTimeInMillis());
+                                            recordDataSource
+                                                    .labelItemDeletedWithModifiedTime(currentItem);
+                                            ToastHelper.showToastInternal(
+                                                    getActivity(),
+                                                    "Record deleted.");
+                                            refreshView();
+                                        }
+                                    }).create().show();
                         }
-                        ToastHelper.showToastInternal(
-                                getActivity(),
-                                "Task deleted.");
-                        refreshView();
                     }
                 });
         mListView.setOnTouchListener(touchListener);
@@ -190,4 +203,5 @@ public class RecordFragment extends BaseFragment implements AbsListView.OnItemCl
         mAdapter.updateList(records);
         mAdapter.notifyDataSetChanged();
     }
+
 }
