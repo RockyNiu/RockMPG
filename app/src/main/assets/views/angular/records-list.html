@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8">
+            <select class="form-control" ng-model="recordsSortOrder">
+                <option value="-mpg">MPG</option>
+                <option value="-gas">Gas</option>
+                <option value="-miles">Miles</option>
+                <option value="-date">Date</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <h3>Average MPG: {{average | number :3}}</h3>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>MPG</th>
+            <th>Gas</th>
+            <th>Miles</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="record in records | orderBy:recordsSortOrder">
+            <td>{{record.mpg | number :3}}</td>
+            <td>{{record.gas | number :3}}</td>
+            <td>{{record.miles | number :1}}</td>
+            <td>{{record.date | date:'yyyy-MM-dd @ h:mma Z'}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

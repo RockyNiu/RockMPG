@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import com.rockyniu.calculatempg.R;
 import com.rockyniu.calculatempg.fragment.CalculatorFragment;
 import com.rockyniu.calculatempg.fragment.RecordFragment;
+import com.rockyniu.calculatempg.fragment.WebViewFragment;
 import com.rockyniu.calculatempg.listener.MainTabListener;
 import com.rockyniu.calculatempg.listener.OnFragmentInteractionListener;
 
@@ -24,8 +25,10 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
     String homeId = "";
     ActionBar.Tab calculatorTab;
     ActionBar.Tab recordTab;
+    ActionBar.Tab webViewTab;
     Fragment calculatorFragment = CalculatorFragment.newInstance(carId, homeId);
     Fragment recordFragment = RecordFragment.newInstance(carId, homeId);
+    Fragment webViewFragment = WebViewFragment.newInstance(carId, homeId);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +57,17 @@ public class MainActivity extends BaseActivity implements OnFragmentInteractionL
         // Setting custom tab icons.
         calculatorTab = actionBar.newTab().setText(R.string.tab_calculator_title);
         recordTab = actionBar.newTab().setText(R.string.tab_record_title);
+        webViewTab = actionBar.newTab().setText(R.string.tab_webView_title);
 
         // Setting tab listeners.
         calculatorTab.setTabListener(new MainTabListener(calculatorFragment));
         recordTab.setTabListener(new MainTabListener(recordFragment));
+        webViewTab.setTabListener(new MainTabListener(webViewFragment));
 
         // Adding tabs to the ActionBar.
         actionBar.addTab(calculatorTab);
         actionBar.addTab(recordTab);
+        actionBar.addTab(webViewTab);
     }
 
 

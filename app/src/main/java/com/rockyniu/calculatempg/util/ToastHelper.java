@@ -7,16 +7,6 @@ import android.widget.Toast;
 import com.rockyniu.calculatempg.R;
 
 public class ToastHelper {
-
-
-	/**
-	 * Shows an toast message with the given message.
-	 * 
-	 * @param activity
-	 *            activity
-	 * @param message
-	 *            message to show or {@code null} for none
-	 */
 	public static void showErrorToast(Activity activity, String message) {
 		String errorMessage = getErrorMessage(activity, message);
 		ToastHelper.showToastInternal(activity, errorMessage);
