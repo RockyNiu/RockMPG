@@ -21,7 +21,8 @@
                         } else {
                             record['mpg'] = -1;
                         }
-                        record['date'] =  record["recordMilesTime"];
+                        var date =  new Date(record["recordMilesTime"]);
+                        record['date'] = date.toLocaleString().replace(" at "," ");
                         delete record["recordMilesTime"];
                         records[row] = record;
                     });

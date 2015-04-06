@@ -1,6 +1,10 @@
 package com.rockyniu.calculatempg.fragment;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -77,18 +81,10 @@ public class WebViewFragment extends BaseFragment {
         }
 
         mWebView = (WebView) rootView.findViewById(R.id.webview);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setAllowContentAccess(true);
-        webSettings.setAllowFileAccessFromFileURLs(true);
-        webSettings.setAllowUniversalAccessFromFileURLs(true);
+        setWebViewSetting(mWebView);
 
         mWebView.addJavascriptInterface(new WebAppInterface(this.getActivity()), "Android");
-
         RecordDataLoader dl = new RecordDataLoader(recordDataSource);
-
-// For passing the data
         mWebView.addJavascriptInterface(dl, "accessor");
         mWebView.loadUrl("file:///android_asset/views/home.html");
 
@@ -110,6 +106,33 @@ public class WebViewFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    private void setWebViewSetting(WebView webView) {
+        webView.setBackgroundColor(getResources().getColor(R.color.background_material_dark));
+
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setAllowContentAccess(true);
+        webSettings.setAllowFileAccessFromFileURLs(true);
+        webSettings.setAllowUniversalAccessFromFileURLs(true);
+
+        //cache
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        if (!isNetworkAvailable()) { // loading offline
+            webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
 

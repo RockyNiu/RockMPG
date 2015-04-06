@@ -1,13 +1,13 @@
+// get local jquery.min.js
+window.jQuery || document.write('<script src="../bower_components/jquery/dist/jquery.min.js"><\/script>');
+
 // get local bootstrap.min.css
 $(document).ready(function () {
-    var bodyColor = $('body').css('color');
-    if (bodyColor != 'rgb(51, 51, 51)') {
+    var paddingRight = $('.container').css('padding-right');
+    if (paddingRight != '15px') {
         $("head").prepend('<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">');
     }
 });
-
-// get local jquery.min.js
-window.jQuery || document.write('<script src="../bower_components/jquery/dist/jquery.min.js"><\/script>');
 
 // get local bootstrap.min.js
 if (typeof($.fn.modal) === 'undefined') {
@@ -15,15 +15,7 @@ if (typeof($.fn.modal) === 'undefined') {
 }
 
 // get local angular
-(function () {
-    try {
-        window.angular.module('ngRoute');
-    }
-    catch (e) {
-        return false;
-    }
-    return true;
-})() || document.write('<script src="../bower_components/angular/angular.min.js"><\/script>');
+window.angular || document.write('<script src="../bower_components/angular/angular.min.js"><\/script>');
 
 //show toast
 function showAndroidToast(toast) {
